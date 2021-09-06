@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+  build-agent:
+    container_name: build-agent
+    image: gra-build:latest
+    build:
+      context: .
+      dockerfile: Build/Dockerfile
+  test-agent:
+    container_name: test-agent
+    image: gra-test:latest
+    build:
+      context: .
+      dockerfile: Test/Dockerfile
+    depends_on:
+    - build-agent  
+  deploy-agent:
+    container_name: deploy-agent
+    image: gra-deploy:latest
+    build:
+      context: .
+      dockerfile: Deploy/Dockerfile
+    depends_on:
+    - build-agent
